@@ -35,6 +35,6 @@ resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
 
 libraryDependencies ++= Seq("org.scalatest" %% "scalatest" % "3.0.4" % Test)
 
-licenses := Seq(("MIT License", url("https://github.com/evolution-gaming/nel/blob/master/LICENSE")))
+licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT")))
 
 releaseCrossBuild := true
