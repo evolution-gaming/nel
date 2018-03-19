@@ -1,8 +1,8 @@
 package com.evolutiongaming.nel
 
 import scala.annotation.unchecked.uncheckedVariance
-import scala.collection.GenTraversableOnce
 import scala.collection.generic.CanBuildFrom
+import scala.collection.{GenTraversableOnce, immutable, mutable}
 import scala.language.higherKinds
 
 
@@ -134,6 +134,21 @@ case class Nel[+A](head: A, tail: List[A]) {
   }
 
   def iterator: Iterator[A] = toList.iterator
+
+  def groupBy[K](f: A => K): Map[K, Nel[A]] = {
+    val map = mutable.Map.empty[K, mutable.Builder[A, List[A]]]
+    for {elem <- this} {
+      val key = f(elem)
+      val builder = map.getOrElseUpdate(key, List.newBuilder)
+      builder += elem
+    }
+    val builder = immutable.Map.newBuilder[K, Nel[A]]
+    for {(k, v) <- map} {
+      builder += ((k, Nel.unsafe(v.result)))
+    }
+
+    builder.result
+  }
 
   override def toString: String = s"$productPrefix($head, ${ tail mkString ", " })"
 }

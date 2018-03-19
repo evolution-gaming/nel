@@ -173,4 +173,12 @@ class NelSpec extends FunSuite with Matchers {
   test("unzip3") {
     Nel((1, 2, 3)).unzip3 shouldEqual ((Nel(1), Nel(2), Nel(3)))
   }
+
+  test("groupBy") {
+    case class Entry(key: Int, value: Int)
+    val nel = Nel(Entry(1, 1), Entry(1, 1), Entry(1, 2), Entry(2, 1), Entry(2, 3))
+    nel.groupBy { _.key } shouldEqual Map(
+      1 -> Nel(Entry(1, 1), Entry(1, 1), Entry(1, 2)),
+      2 -> Nel(Entry(2, 1), Entry(2, 3)))
+  }
 }
