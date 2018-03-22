@@ -150,7 +150,7 @@ case class Nel[+A](head: A, tail: List[A]) {
     builder.result
   }
 
-  override def toString: String = s"$productPrefix($head, ${ tail mkString ", " })"
+  override def toString: String = s"$productPrefix(${ toList mkString ", " })"
 }
 
 object Nel {

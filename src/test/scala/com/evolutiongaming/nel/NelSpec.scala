@@ -51,9 +51,9 @@ class NelSpec extends FunSuite with Matchers {
   test("toString") {
     Nel(1, 2, 3).toString shouldEqual "Nel(1, 2, 3)"
 
-    1 :: Nel
+    (1 :: Nel).toString shouldEqual "Nel(1)"
 
-    1 :: 1 :: Nel
+    (1 :: 1 :: Nel).toString shouldEqual "Nel(1, 1)"
   }
 
   test("1 :: Nel") {
