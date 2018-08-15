@@ -9,7 +9,7 @@ import scala.language.higherKinds
 /**
   * Non empty list
   */
-case class Nel[+A](head: A, tail: List[A]) {
+final case class Nel[+A](head: A, tail: List[A]) {
 
   def toList: List[A] = head :: tail
 
