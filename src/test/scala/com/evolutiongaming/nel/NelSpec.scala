@@ -181,4 +181,10 @@ class NelSpec extends FunSuite with Matchers {
       1 -> Nel(Entry(1, 1), Entry(1, 1), Entry(1, 2)),
       2 -> Nel(Entry(2, 1), Entry(2, 3)))
   }
+
+  test("flatten") {
+    Nel[Option[Int]](Some(1), None, Some(2)).flatten shouldEqual List(1, 2)
+    Nel[Option[Int]](None, Some(1)).flatten shouldEqual List(1)
+    Nel[Option[Int]](None, None).flatten shouldEqual Nil
+  }
 }

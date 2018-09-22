@@ -150,6 +150,8 @@ final case class Nel[+A](head: A, tail: List[A]) {
     builder.result
   }
 
+  def flatten[B](implicit asTraversable: A => GenTraversableOnce[B]): List[B] = toList.flatten
+
   override def toString: String = s"$productPrefix(${ toList mkString ", " })"
 }
 
