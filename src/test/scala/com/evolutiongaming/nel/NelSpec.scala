@@ -187,4 +187,12 @@ class NelSpec extends FunSuite with Matchers {
     Nel[Option[Int]](None, Some(1)).flatten shouldEqual List(1)
     Nel[Option[Int]](None, None).flatten shouldEqual Nil
   }
+
+  test("reverseMap") {
+    Nel(1, 2, 3).reverseMap(_.toString) shouldEqual Nel("3", "2", "1")
+  }
+
+  test("reverse_:::") {
+    Nel(3, 4).reverse_:::(List(2, 1)) shouldEqual Nel(1, 2, 3, 4)
+  }
 }

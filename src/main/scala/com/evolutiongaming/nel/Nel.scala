@@ -20,19 +20,19 @@ final case class Nel[+A](head: A, tail: List[A]) {
 
   def map[B](f: A => B): Nel[B] = Nel(f(head), tail.map(f))
 
-  def ++[AA >: A](xs: Nel[AA]): Nel[AA] = this ++ xs.toList
+  def ++[B >: A](xs: Nel[B]): Nel[B] = this ++ xs.toList
 
-  def ++[AA >: A](xs: GenTraversableOnce[AA]): Nel[AA] = {
+  def ++[B >: A](xs: GenTraversableOnce[B]): Nel[B] = {
     Nel(head, tail ++ xs)
   }
 
-  def +:[AA >: A](a: AA): Nel[AA] = Nel(a, head :: tail)
+  def +:[B >: A](a: B): Nel[B] = Nel(a, head :: tail)
 
-  def :+[AA >: A](a: AA): Nel[AA] = Nel(head, tail :+ a)
+  def :+[B >: A](a: B): Nel[B] = Nel(head, tail :+ a)
 
   def flatMap[B](f: A => Nel[B]): Nel[B] = f(head) ++ tail.flatMap(f andThen (_.toList))
 
-  def ::[AA >: A](a: AA): Nel[AA] = Nel(a, head :: tail)
+  def ::[B >: A](a: B): Nel[B] = Nel(a, head :: tail)
 
   def :::[AA >: A](xs: List[AA]): Nel[AA] = xs match {
     case x :: xs => Nel(x, xs ::: head :: tail)
@@ -51,7 +51,7 @@ final case class Nel[+A](head: A, tail: List[A]) {
     else head :: ftail
   }
 
-  def concat[AA >: A](other: Nel[AA]): Nel[AA] = Nel(head, tail ::: other.toList)
+  def concat[B >: A](other: Nel[B]): Nel[B] = Nel(head, tail ::: other.toList)
 
   def find(p: A => Boolean): Option[A] = {
     if (p(head)) Some(head)
@@ -62,7 +62,7 @@ final case class Nel[+A](head: A, tail: List[A]) {
 
   def forall(p: A => Boolean): Boolean = p(head) && tail.forall(p)
 
-  def contains[AA >: A](a: AA): Boolean = exists(_ == a)
+  def contains[B >: A](a: B): Boolean = exists(_ == a)
 
   def foldLeft[B](z: B)(f: (B, A) => B): B = {
     tail.foldLeft(f(z, head))(f)
@@ -151,6 +151,14 @@ final case class Nel[+A](head: A, tail: List[A]) {
   }
 
   def flatten[B](implicit asTraversable: A => GenTraversableOnce[B]): List[B] = toList.flatten
+
+  def reverse_:::[B >: A](list: List[B]): Nel[B] = {
+    list.foldLeft[Nel[B]](this) { (bs, b) => b :: bs }
+  }
+
+  def reverseMap[B](f: A => B): Nel[B] = {
+    tail.foldLeft(Nel(f(head))) { (bs, a) => f(a) :: bs }
+  }
 
   override def toString: String = s"$productPrefix(${ toList mkString ", " })"
 }
