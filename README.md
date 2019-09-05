@@ -14,5 +14,5 @@
 ```scala
 resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
 
-libraryDependencies += "com.evolutiongaming" %% "nel" % "1.3.3"
+libraryDependencies += "com.evolutiongaming" %% "nel" % "1.3.4"
 ```

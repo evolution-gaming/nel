@@ -14,26 +14,13 @@ bintrayOrganization := Some("evolutiongaming")
 
 scalaVersion := crossScalaVersions.value.last
 
-crossScalaVersions := Seq("2.11.12", "2.12.7")
+crossScalaVersions := Seq("2.12.9", "2.13.0")
 
-scalacOptions ++= Seq(
-  "-encoding", "UTF-8",
-  "-feature",
-  "-unchecked",
-  "-deprecation",
-  "-Xfatal-warnings",
-  "-Xlint",
-  "-Yno-adapted-args",
-  "-Ywarn-dead-code",
-  "-Ywarn-numeric-widen",
-  "-Xfuture"
-)
-
-scalacOptions in (Compile,doc) ++= Seq("-groups", "-implicits", "-no-link-warnings")
+Compile / doc / scalacOptions ++= Seq("-groups", "-implicits", "-no-link-warnings")
 
 resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
 
-libraryDependencies ++= Seq("org.scalatest" %% "scalatest" % "3.0.5" % Test)
+libraryDependencies ++= Seq("org.scalatest" %% "scalatest" % "3.0.8" % Test)
 
 licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT")))
 

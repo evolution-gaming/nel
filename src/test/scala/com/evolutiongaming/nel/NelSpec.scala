@@ -28,10 +28,6 @@ class NelSpec extends FunSuite with Matchers {
     Nel(1) ++ Nel(2) shouldEqual Nel(1, 2)
   }
 
-  test("to") {
-    Nel(1, 2).to[Set] shouldEqual Set(1, 2)
-  }
-
   test("toMap") {
     Nel(1 -> "1", 2 -> "2").toMap shouldEqual Map(1 -> "1", 2 -> "2")
   }
