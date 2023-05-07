@@ -6,22 +6,20 @@ homepage := Some(new URL("http://github.com/evolution-gaming/nel"))
 
 startYear := Some(2017)
 
-organizationName := "Evolution Gaming"
+organizationName := "Evolution"
 
-organizationHomepage := Some(url("http://evolutiongaming.com"))
-
-bintrayOrganization := Some("evolutiongaming")
+organizationHomepage := Some(url("http://evolution.com"))
 
 scalaVersion := crossScalaVersions.value.last
 
-crossScalaVersions := Seq("2.12.9", "2.13.0")
+crossScalaVersions := Seq("3.2.2", "2.12.17", "2.13.10")
 
 Compile / doc / scalacOptions ++= Seq("-groups", "-implicits", "-no-link-warnings")
 
-resolvers += Resolver.bintrayRepo("evolutiongaming", "maven")
-
-libraryDependencies ++= Seq("org.scalatest" %% "scalatest" % "3.0.8" % Test)
+libraryDependencies ++= Seq("org.scalatest" %% "scalatest" % "3.2.15" % Test)
 
 licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT")))
+
+publishTo := Some(Resolver.evolutionReleases)
 
 releaseCrossBuild := true
