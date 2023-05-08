@@ -1,8 +1,9 @@
 package com.evolutiongaming.nel
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class NelSpec extends FunSuite with Matchers {
+class NelSpec extends AnyFunSuite with Matchers {
 
   test("map") {
     val actual = for {x <- Nel(1, 2, 3)} yield x + 1
