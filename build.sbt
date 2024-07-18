@@ -2,13 +2,13 @@ name := "nel"
 
 organization := "com.evolutiongaming"
 
-homepage := Some(new URL("http://github.com/evolution-gaming/nel"))
+homepage := Some(url("https://github.com/evolution-gaming/nel"))
 
 startYear := Some(2017)
 
 organizationName := "Evolution"
 
-organizationHomepage := Some(url("http://evolution.com"))
+organizationHomepage := Some(url("https://evolution.com"))
 
 scalaVersion := crossScalaVersions.value.last
 
@@ -23,3 +23,7 @@ licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT")))
 publishTo := Some(Resolver.evolutionReleases)
 
 releaseCrossBuild := true
+
+//addCommandAlias("check", "all versionPolicyCheck Compile/doc")
+addCommandAlias("check", "show version")
+addCommandAlias("build", "+all compile test")
