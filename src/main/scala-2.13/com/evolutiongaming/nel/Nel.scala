@@ -2,10 +2,9 @@ package com.evolutiongaming.nel
 
 import scala.collection.{Factory, IterableOnce, immutable, mutable}
 
-
 /**
-  * Non empty list
-  */
+ * Non empty list
+ */
 final case class Nel[+A](head: A, tail: List[A]) {
 
   def toList: List[A] = head :: tail
@@ -33,7 +32,7 @@ final case class Nel[+A](head: A, tail: List[A]) {
 
   def :::[AA >: A](xs: List[AA]): Nel[AA] = xs match {
     case x :: xs => Nel(x, xs ::: head :: tail)
-    case Nil     => this
+    case Nil => this
   }
 
   def filter(p: A => Boolean): List[A] = {
@@ -90,9 +89,12 @@ final case class Nel[+A](head: A, tail: List[A]) {
 
   def to[Coll](factory: Factory[A, Coll]): Coll = factory.fromSpecific(this.toList)
 
-  def toMap[K, V](implicit ev: A <:< (K, V)): Map[K, V] = {
+  def toMap[K, V](
+    implicit
+    ev: A <:< (K, V),
+  ): Map[K, V] = {
     val b = Map.newBuilder[K, V]
-    for {x <- this} b += x
+    for { x <- this } b += x
     b.result()
   }
 
@@ -113,13 +115,19 @@ final case class Nel[+A](head: A, tail: List[A]) {
 
   def last: A = tail.lastOption getOrElse head
 
-  def unzip[A1, A2](implicit asPair: A => (A1, A2)): (Nel[A1], Nel[A2]) = {
+  def unzip[A1, A2](
+    implicit
+    asPair: A => (A1, A2),
+  ): (Nel[A1], Nel[A2]) = {
     val (h1, h2) = asPair(head)
     val (t1, t2) = tail.unzip
     (Nel(h1, t1), Nel(h2, t2))
   }
 
-  def unzip3[A1, A2, A3](implicit asTriple: A => (A1, A2, A3)): (Nel[A1], Nel[A2], Nel[A3]) = {
+  def unzip3[A1, A2, A3](
+    implicit
+    asTriple: A => (A1, A2, A3),
+  ): (Nel[A1], Nel[A2], Nel[A3]) = {
     val (h1, h2, h3) = asTriple(head)
     val (t1, t2, t3) = tail.unzip3
     (Nel(h1, t1), Nel(h2, t2), Nel(h3, t3))
@@ -129,20 +137,23 @@ final case class Nel[+A](head: A, tail: List[A]) {
 
   def groupBy[K](f: A => K): Map[K, Nel[A]] = {
     val map = mutable.Map.empty[K, mutable.Builder[A, List[A]]]
-    for {elem <- this} {
+    for { elem <- this } {
       val key = f(elem)
       val builder = map.getOrElseUpdate(key, List.newBuilder)
       builder += elem
     }
     val builder = immutable.Map.newBuilder[K, Nel[A]]
-    for {(k, v) <- map} {
+    for { (k, v) <- map } {
       builder += ((k, Nel.unsafe(v.result())))
     }
 
     builder.result()
   }
 
-  def flatten[B](implicit asTraversable: A => IterableOnce[B]): List[B] = toList.flatten
+  def flatten[B](
+    implicit
+    asTraversable: A => IterableOnce[B],
+  ): List[B] = toList.flatten
 
   def reverse_:::[B >: A](list: List[B]): Nel[B] = {
     list.foldLeft[Nel[B]](this) { (bs, b) => b :: bs }

@@ -12,18 +12,18 @@ organizationHomepage := Some(url("https://evolution.com"))
 
 scalaVersion := crossScalaVersions.value.last
 
-crossScalaVersions := Seq("3.2.2", "2.12.17", "2.13.10")
+crossScalaVersions := Seq("3.3.8", "2.13.18")
 
 Compile / doc / scalacOptions ++= Seq("-groups", "-implicits", "-no-link-warnings")
 
-libraryDependencies ++= Seq("org.scalatest" %% "scalatest" % "3.2.15" % Test)
+libraryDependencies ++= Seq("org.scalatest" %% "scalatest" % "3.2.20" % Test)
 
 licenses := Seq(("MIT", url("https://opensource.org/licenses/MIT")))
 
 publishTo := Some(Resolver.evolutionReleases)
 
-releaseCrossBuild := true
+versionPolicyIntention := Compatibility.BinaryCompatible
 
-//addCommandAlias("check", "all versionPolicyCheck Compile/doc")
-addCommandAlias("check", "show version")
+addCommandAlias("check", "all scalafmtCheckRepo versionPolicyCheck Compile/doc")
+addCommandAlias("fmt", "scalafmtRepo")
 addCommandAlias("build", "+all compile test")
