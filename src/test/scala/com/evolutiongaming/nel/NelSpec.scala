@@ -6,7 +6,7 @@ import org.scalatest.matchers.should.Matchers
 class NelSpec extends AnyFunSuite with Matchers {
 
   test("map") {
-    val actual = for {x <- Nel(1, 2, 3)} yield x + 1
+    val actual = for { x <- Nel(1, 2, 3) } yield x + 1
     actual shouldEqual Nel(2, 3, 4)
   }
 
@@ -176,7 +176,8 @@ class NelSpec extends AnyFunSuite with Matchers {
     val nel = Nel(Entry(1, 1), Entry(1, 1), Entry(1, 2), Entry(2, 1), Entry(2, 3))
     nel.groupBy { _.key } shouldEqual Map(
       1 -> Nel(Entry(1, 1), Entry(1, 1), Entry(1, 2)),
-      2 -> Nel(Entry(2, 1), Entry(2, 3)))
+      2 -> Nel(Entry(2, 1), Entry(2, 3)),
+    )
   }
 
   test("flatten") {
